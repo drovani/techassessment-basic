@@ -1,0 +1,11 @@
+<h1>Recent Blog Posts</h1>
+
+<p *ngIf="!blogposts"><em>Loading...</em></p>
+
+<section *ngIf="blogposts">
+  <article *ngFor="let blogpost of blogposts">
+    <h2>{{ blogpost.title }}</h2>
+    <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn }}</aside>
+    <p>{{ blogpost.bodyText }}</p>
+  </article>
+</section>
