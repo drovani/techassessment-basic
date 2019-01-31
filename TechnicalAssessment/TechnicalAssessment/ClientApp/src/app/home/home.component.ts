@@ -16,6 +16,7 @@ export class HomeComponent {
 }
 
 interface BlogPost {
+  id: string;
   title: string;
   postedBy: string;
   postedOn: Date;

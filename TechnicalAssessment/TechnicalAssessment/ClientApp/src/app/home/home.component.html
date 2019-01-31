@@ -4,8 +4,11 @@
 
 <section *ngIf="blogposts">
   <article *ngFor="let blogpost of blogposts">
-    <h2>{{ blogpost.title }}</h2>
-    <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn }}</aside>
+    <header>
+      <h2>{{ blogpost.title }}</h2>
+      <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn }}</aside>
+      <span>{{ blogpost.id }}</span>
+    </header>
     <p>{{ blogpost.bodyText }}</p>
   </article>
 </section>

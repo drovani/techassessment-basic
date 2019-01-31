@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using TechnicalAssessment.DataServices;
 
 namespace TechnicalAssessment.Controllers
@@ -11,6 +12,16 @@ namespace TechnicalAssessment.Controllers
         public IEnumerable<BlogPost> BlogPosts()
         {
             return new BlogPostService().BlogPosts;
+        }
+        [HttpDelete]
+        public void DeleteBlogPost(Guid id)
+        {
+            new BlogPostService().DeleteBlogPost(id);
+        }
+        [HttpPost]
+        public void CreateBlogPost(BlogPost newPost)
+        {
+            new BlogPostService().CreateBlogPost(newPost);
         }
     }
 }
