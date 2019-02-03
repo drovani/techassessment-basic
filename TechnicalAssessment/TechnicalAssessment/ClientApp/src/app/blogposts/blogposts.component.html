@@ -1,12 +1,40 @@
-<h1>Recent Blog Posts</h1>
+<h2>Create New Blog Post</h2>
+
+<section>
+  <article style="border-bottom:thin solid black; padding-bottom: 1em;">
+    <form #blogpostForm="ngForm" (submit)="onSubmit()">
+      <header>
+        <div class="input-group input-group-lg mb-1">
+          <input type="text" class="form-control" id="title" required [(ngModel)]="newBlogPost.title" name="title" placeholder="Blog Post Title" />
+        </div>
+        <div class="input-group input-group-sm">
+          <label for="postedBy">Posted by </label><input type="text" class="form-control mx-3" id="postedBy" required [(ngModel)]="newBlogPost.postedBy" name="postedBy" placeholder="author" />
+          <label for="postedOn">on</label><input type="datetime-local" class="form-control ml-3" id="postedOn" required [ngModel]="newBlogPost.postedOn | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="newBlogPost.postedOn = $event" name="postedOn" />
+        </div>
+        <span>{{ newBlogPost.id }}</span>
+      </header>
+      <div class="input-group mb-1">
+        <textarea class="form-control" id="bodytext" required [(ngModel)]="newBlogPost.bodyText" name="bodyText" rows="5" cols="80" placeholder="Blog Post Text"></textarea>
+      </div>
+      <button type="submit" class="btn mr-1"
+              [ngClass]="{'btn-primary': blogpostForm.form.valid, 'btn-dark': !blogpostForm.form.valid}"
+              [disabled]="!blogpostForm.form.valid">
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetBlogPost(); blogpostForm.reset()">Reset</button>
+    </form>
+  </article>
+</section>
+
+<h2>Recent Blog Posts</h2>
 
 <div *ngIf="!blogposts"><em>Loading&#8230;</em></div>
 
 <section *ngIf="blogposts">
   <article *ngFor="let blogpost of blogposts" style="border-bottom:thin solid black; padding-bottom: 1em;">
     <header style="padding-bottom: 1em">
-      <h2>{{ blogpost.title }}</h2>
-      <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn }}</aside>
+      <h3>{{ blogpost.title }}</h3>
+      <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn | date:'medium' }}</aside>
       <span>{{ blogpost.id }}</span>
     </header>
     <p>{{ blogpost.bodyText }}</p>

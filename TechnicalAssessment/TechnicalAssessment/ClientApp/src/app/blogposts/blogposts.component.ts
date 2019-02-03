@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogPost } from '../blogpost';
-import { BlogPostService } from '../blogpost.service';
+import { BlogPost } from './blogpost';
+import { BlogPostService } from './blogpost.service';
 
 @Component({
   selector: 'app-blogposts',
@@ -8,8 +8,11 @@ import { BlogPostService } from '../blogpost.service';
 })
 export class BlogPostsComponent implements OnInit {
   public blogposts: BlogPost[];
+  public newBlogPost: BlogPost;
 
-  constructor(private blogpostService: BlogPostService) { }
+  constructor(private blogpostService: BlogPostService) {
+    this.newBlogPost = new BlogPost('Test Blog Title', 'Seeded Author', 'This is some sample text so it doesn\'t need to be asdf\'d every time.');
+  }
 
   ngOnInit() {
     this.getBlogPosts();
@@ -18,6 +21,18 @@ export class BlogPostsComponent implements OnInit {
   getBlogPosts(): void {
     this.blogpostService.getBlogPosts()
       .subscribe(blogposts => this.blogposts = blogposts);
+  }
+
+  onSubmit(): void {
+    this.blogpostService.createBlogPost(this.newBlogPost)
+      .subscribe(post => {
+        this.blogposts.push(post);
+        this.newBlogPost = new BlogPost();
+      });
+  }
+
+  resetBlogPost(): void {
+    this.newBlogPost = new BlogPost();
   }
 
   delete(blogpost: BlogPost): void {

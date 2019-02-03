@@ -12,7 +12,7 @@ import { BlogPostsComponent } from './blogposts/blogposts.component';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    BlogPostsComponent
+    BlogPostsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

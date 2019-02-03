@@ -15,7 +15,6 @@ const httpOptions = {
 })
 
 export class BlogPostService {
-
   private blogPostsUrl = 'api/BlogPosts';
 
   constructor(protected http: HttpClient) { }
@@ -25,6 +24,13 @@ export class BlogPostService {
     return this.http.get<BlogPost[]>(this.blogPostsUrl)
       .pipe(
         catchError(this.handleError('getBlogPosts', []))
+      );
+  }
+
+  createBlogPost(blogpost: BlogPost): Observable<BlogPost> {
+    return this.http.post<BlogPost>(this.blogPostsUrl, blogpost, httpOptions)
+      .pipe(
+        catchError(this.handleError<BlogPost>('createBlogPost'))
       );
   }
 
