@@ -6,10 +6,10 @@ using TechnicalAssessment.DataServices;
 namespace TechnicalAssessment.Controllers
 {
     [Route("api/[controller]")]
-    public partial class HomeController : Controller
+    public partial class BlogPostsController : Controller
     {
-        [HttpGet("[action]")]
-        public IEnumerable<BlogPost> BlogPosts()
+        [HttpGet]
+        public IEnumerable<BlogPost> GetBlogPosts()
         {
             return new BlogPostService().BlogPosts;
         }
@@ -19,7 +19,7 @@ namespace TechnicalAssessment.Controllers
             new BlogPostService().DeleteBlogPost(id);
         }
         [HttpPost]
-        public void CreateBlogPost(BlogPost newPost)
+        public void PostBlogPost(BlogPost newPost)
         {
             new BlogPostService().CreateBlogPost(newPost);
         }

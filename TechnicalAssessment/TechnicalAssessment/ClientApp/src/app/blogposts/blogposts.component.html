@@ -1,10 +1,10 @@
 <h1>Recent Blog Posts</h1>
 
-<p *ngIf="!blogposts"><em>Loading...</em></p>
+<div *ngIf="!blogposts"><em>Loading&#8230;</em></div>
 
 <section *ngIf="blogposts">
-  <article *ngFor="let blogpost of blogposts">
-    <header>
+  <article *ngFor="let blogpost of blogposts" style="border-bottom:thin solid black; padding-bottom: 1em;">
+    <header style="padding-bottom: 1em">
       <h2>{{ blogpost.title }}</h2>
       <aside>Posted by {{ blogpost.postedBy }} on {{ blogpost.postedOn }}</aside>
       <span>{{ blogpost.id }}</span>
