@@ -19,4 +19,9 @@ export class BlogPostsComponent implements OnInit {
     this.blogpostService.getBlogPosts()
       .subscribe(blogposts => this.blogposts = blogposts);
   }
+
+  delete(blogpost: BlogPost): void {
+    this.blogposts = this.blogposts.filter(bp => bp !== blogpost);
+    this.blogpostService.deleteBlogPost(blogpost).subscribe();
+  }
 }

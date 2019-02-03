@@ -13,7 +13,7 @@ namespace TechnicalAssessment.Controllers
         {
             return new BlogPostService().BlogPosts;
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public void DeleteBlogPost(Guid id)
         {
             new BlogPostService().DeleteBlogPost(id);

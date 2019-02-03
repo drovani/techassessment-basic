@@ -10,5 +10,6 @@
       <span>{{ blogpost.id }}</span>
     </header>
     <p>{{ blogpost.bodyText }}</p>
+    <button type="button" (click)="delete(blogpost)" class="btn btn-danger">Delete</button>
   </article>
 </section>
