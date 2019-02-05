@@ -6,22 +6,41 @@ using TechnicalAssessment.DataServices;
 namespace TechnicalAssessment.Controllers
 {
     [Route("api/[controller]")]
-    public partial class BlogPostsController : Controller
+    public partial class BlogPostsController : ControllerBase
     {
+        private readonly BloggingContext _context;
+
+        public BlogPostsController(BloggingContext context) => _context = context;
+
         [HttpGet]
-        public IEnumerable<BlogPost> GetBlogPosts()
+        public ActionResult<IEnumerable<BlogPost>> GetBlogPosts()
         {
-            return new BlogPostService().BlogPosts;
+            return Ok(new BlogPostService(_context).GetBlogPosts());
+        }
+        [HttpGet("{id}")]
+        public ActionResult<BlogPost> GetBlogPost(Guid id)
+        {
+            BlogPost post = new BlogPostService(_context).GetBlogPost(id);
+            if (post == default(BlogPost))
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(post);
+            }
         }
         [HttpDelete("{id}")]
-        public void DeleteBlogPost(Guid id)
+        public ActionResult DeleteBlogPost(Guid id)
         {
-            new BlogPostService().DeleteBlogPost(id);
+            new BlogPostService(_context).DeleteBlogPost(id);
+            return NoContent();
         }
         [HttpPost]
-        public void PostBlogPost(BlogPost newPost)
+        public ActionResult<BlogPost> PostBlogPost([FromBody] BlogPost newPost)
         {
-            new BlogPostService().CreateBlogPost(newPost);
+            new BlogPostService(_context).CreateBlogPost(newPost);
+            return CreatedAtAction(nameof(GetBlogPost), new { id = newPost.Id }, newPost);
         }
     }
 }

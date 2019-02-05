@@ -26,7 +26,7 @@ export class BlogPostsComponent implements OnInit {
   onSubmit(): void {
     this.blogpostService.createBlogPost(this.newBlogPost)
       .subscribe(post => {
-        this.blogposts.push(post);
+        this.blogposts.unshift(post);
         this.newBlogPost = new BlogPost();
       });
   }

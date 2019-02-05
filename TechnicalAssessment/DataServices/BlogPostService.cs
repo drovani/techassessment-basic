@@ -6,16 +6,32 @@ namespace TechnicalAssessment.DataServices
 {
     public class BlogPostService
     {
-        public readonly IEnumerable<BlogPost> BlogPosts;
+        private BloggingContext _context;
 
-        public BlogPostService() => BlogPosts = SeedBlogPosts();
+        public BlogPostService(BloggingContext context) => _context = context;
 
-        public void DeleteBlogPost(Guid id) => BlogPosts.ToDictionary(t => t.Id).Remove(id);
-        public void CreateBlogPost(BlogPost newPost) => BlogPosts.ToList().Add(newPost);
-
-        private static BlogPost[] SeedBlogPosts()
+        public IEnumerable<BlogPost> GetBlogPosts()
         {
-            return new BlogPost[]
+            return _context.BlogPosts.OrderByDescending(d => d.PostedOn).AsEnumerable();
+        }
+        public BlogPost GetBlogPost(Guid id)
+        {
+            return _context.BlogPosts.SingleOrDefault(post => post.Id == id);
+        }
+        public void DeleteBlogPost(Guid id)
+        {
+            _context.Remove(_context.BlogPosts.SingleOrDefault(post => post.Id == id));
+            _context.SaveChanges();
+        }
+        public void CreateBlogPost(BlogPost newPost)
+        {
+            _context.Add(newPost);
+            _context.SaveChanges();
+        }
+
+        public static void SeedBlogPosts(BloggingContext context)
+        {
+            context.AddRange(new BlogPost[]
             {
                 new BlogPost
                 {
@@ -57,7 +73,8 @@ namespace TechnicalAssessment.DataServices
                     PostedOn = DateTime.UtcNow.AddDays(-28),
                     BodyText = @"Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment. Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring."
                 },
-            };
+            });
+            context.SaveChanges();
         }
 
     }
