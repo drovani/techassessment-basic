@@ -59,7 +59,7 @@ namespace TechnicalAssessment
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-                        
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

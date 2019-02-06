@@ -37,7 +37,7 @@ namespace TechnicalAssessment.Controllers
             return NoContent();
         }
         [HttpPost]
-        public ActionResult<BlogPost> PostBlogPost([FromBody] BlogPost newPost)
+        public ActionResult<BlogPost> PostBlogPost(BlogPost newPost)
         {
             new BlogPostService(_context).CreateBlogPost(newPost);
             return CreatedAtAction(nameof(GetBlogPost), new { id = newPost.Id }, newPost);
